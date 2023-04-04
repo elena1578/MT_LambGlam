@@ -9,11 +9,11 @@ const int piezoPin = 8;
 #define NOTE_CS1 35
 
 int melody[] = {
-  NOTE_B0, NOTE_C1, NOTE_CS
+  NOTE_B0, NOTE_C1, NOTE_CS, NOTE_B0
 };
 
 int noteDurations[] = {
-  4, 4, 4
+  4, 4, 4, 4
 };
 
 
