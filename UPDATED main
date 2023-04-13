@@ -1,60 +1,41 @@
-//set up servo to allow wolf figure to spin
-#include <Servo.h>
-Servo myservo;  //creates servo variable
-const int buttonCPin = 2;
+//LEDs
+const int ledPin = 9;
 
-//copper wires emulate buttons when pieces of the wire are connected
 //set up button A
 const int buttonAPin = 2;
 int buttonAState = 0;
 int lastButtonAState = 0;
 bool A = false;
 
-//set up button B
-const int buttonBPin = 3;
-int buttonBState = 0;
-int lastButtonBState = 0;
-bool B = false;
+//set up servo to allow wolf figure to spin
+#include <Servo.h>
+Servo myservo;  //creates servo variable
+
 
 void setup() {
   pinMode(buttonAPin, INPUT);
-  pinMode(buttonBPin, INPUT);
-  pinMode(buttonCPin, INPUT);
-  myservo.attach(9)  //'attaches' servo to pin 9
-
-    Serial.begin(9600);
-  Serial.println("start first floor house")
+  pinMode(ledPin, OUTPUT);
+  //myservo.attach(8) //'attaches' servo to pin 9
+  Serial.begin(9600);
 }
 
 void loop() {
   buttonAState = digitalRead(buttonAPin);
-  buttonBState = digitalRead(buttonBPin);
 
-  if (digitalRead(buttonCPin) == HIGH) {
-    myservo.write(180)  //tells servo what angle to spin (in this case 180 degrees)
-  } else {
-    myservo.write(0);  //default position
+  if (digitalRead(buttonAPin) == HIGH) {
+    digitalWrite(ledPin, HIGH);
+    // myservo.write(180)  //tells servo what angle to spin (in this case 180 degrees)
+    // } else {
+    //   myservo.write(0);  //default position
+    // }
   }
-}
 
-//read button A
-if (buttonAState != lastButtonAState) {
-  if (buttonAState == HIGH) {
-    A = true;
+  //read button A
+  if (buttonAState != lastButtonAState) {
+    if (buttonAState == HIGH) {
+      A = true;
+    }
   }
-}
 
-//read button B
-if (buttonBState != lastButtonBState) {
-  if (buttonBState == HIGH) {
-    B = true;
-  }
-}
-
-if (A && B) {
-  Serial.println("end story");
-}
-
-lastButtonAState = buttonAState;
-lastButtonBState = buttonBState;
+  lastButtonAState = buttonAState;
 }
