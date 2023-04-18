@@ -19,7 +19,6 @@ bool B = false;
 void setup() {
   pinMode(buttonAPin, INPUT);
   pinMode(buttonBPin, INPUT);
-  pinMode(buttonCPin, INPUT);
   myservo1.attach(5)  //'attaches' servo to pin 5
   myservo2.attach(6)
 
