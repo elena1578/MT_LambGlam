@@ -1,17 +1,17 @@
-//set up servo to allow wolf figure to spin
+//set up servo to allow speech bubbles to spin
 #include <Servo.h>
-Servo myservo;  //creates servo variable
-const int buttonCPin = 2;
+Servo myservo1;  //creates servo variable
+Servo myservo2;
 
 //copper wires emulate buttons when pieces of the wire are connected
 //set up button A
-const int buttonAPin = 2;
+const int buttonAPin = 8;
 int buttonAState = 0;
 int lastButtonAState = 0;
 bool A = false;
 
 //set up button B
-const int buttonBPin = 3;
+const int buttonBPin = 9;
 int buttonBState = 0;
 int lastButtonBState = 0;
 bool B = false;
@@ -19,42 +19,47 @@ bool B = false;
 void setup() {
   pinMode(buttonAPin, INPUT);
   pinMode(buttonBPin, INPUT);
-  pinMode(buttonCPin, INPUT);
-  myservo.attach(9)  //'attaches' servo to pin 9
+  myservo1.attach(5);  //'attaches' servo to pin 5
+  myservo2.attach(6);
 
-    Serial.begin(9600);
-  Serial.println("start first floor house")
+  Serial.begin(9600);
+  Serial.println("begin story");
 }
+
 
 void loop() {
   buttonAState = digitalRead(buttonAPin);
+
+  if (digitalRead(buttonAPin) == HIGH) {
+    myservo1.write(180);  //tells servo what angle to spin (in this case 180 degrees)
+  } else {
+    myservo1.write(0);  //default position
+  }
+
   buttonBState = digitalRead(buttonBPin);
 
-  if (digitalRead(buttonCPin) == HIGH) {
-    myservo.write(180)  //tells servo what angle to spin (in this case 180 degrees)
+  if (digitalRead(buttonBPin) == HIGH) {
+    myservo2.write(180);  //tells servo what angle to spin (in this case 180 degrees)
   } else {
-    myservo.write(0);  //default position
+    myservo2.write(0);  //default position
   }
-}
 
-//read button A
-if (buttonAState != lastButtonAState) {
-  if (buttonAState == HIGH) {
-    A = true;
+  //read button A
+  if (buttonAState != lastButtonAState) {
+    if (buttonAState == HIGH) {
+      A = true;
+      Serial.println("button A pressed");
+    }
   }
-}
 
-//read button B
-if (buttonBState != lastButtonBState) {
-  if (buttonBState == HIGH) {
-    B = true;
+  //read button B
+  if (buttonBState != lastButtonBState) {
+    if (buttonBState == HIGH) {
+      B = true;
+      Serial.println("button B pressed");
+    }
   }
-}
 
-if (A && B) {
-  Serial.println("end story");
-}
-
-lastButtonAState = buttonAState;
-lastButtonBState = buttonBState;
+  lastButtonAState = buttonAState;
+  lastButtonBState = buttonBState;
 }
