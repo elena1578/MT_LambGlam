@@ -1,60 +1,76 @@
-//set up servo to allow wolf figure to spin
-#include <Servo.h>
-Servo myservo;  //creates servo variable
-const int buttonCPin = 2;
+/*
+The Wolf and the Seven Lambs
 
-//copper wires emulate buttons when pieces of the wire are connected
-//set up button A
-const int buttonAPin = 2;
+Team Name: Lamb Glam
+Team Members: Elena Sipes and Kateyln Sophia Ramirez
+Description: Two buttons can be triggered that each independently spin a servo by 180 degrees.
+*/
+
+//SERVO VARIABLES
+#include <Servo.h>
+Servo myservo1;  //creates servo variable
+Servo myservo2;
+
+//Copper wires emulate buttons when pieces of the wire are connected
+//BUTTON A VARIABLE
+const int buttonAPin = 8;
 int buttonAState = 0;
 int lastButtonAState = 0;
 bool A = false;
 
-//set up button B
-const int buttonBPin = 3;
+//BUTTON B VARIABLE
+const int buttonBPin = 9;
 int buttonBState = 0;
 int lastButtonBState = 0;
 bool B = false;
 
+//SETTING UP SERVOS AND BUTTONS
 void setup() {
   pinMode(buttonAPin, INPUT);
   pinMode(buttonBPin, INPUT);
-  pinMode(buttonCPin, INPUT);
-  myservo.attach(9)  //'attaches' servo to pin 9
+  myservo1.attach(5);  //'attaches' servo to pin 5
+  myservo2.attach(6);
 
-    Serial.begin(9600);
-  Serial.println("start first floor house")
+  Serial.begin(9600);
+  Serial.println("begin story");
 }
 
+//LOGIC
 void loop() {
+
+//BUTTON A MECHANISM
   buttonAState = digitalRead(buttonAPin);
+  if (digitalRead(buttonAPin) == HIGH) {
+    myservo1.write(180);  //tells servo what angle to spin (in this case 180 degrees)
+  }
+
+//BUTTON B MECHANISM
   buttonBState = digitalRead(buttonBPin);
-
-  if (digitalRead(buttonCPin) == HIGH) {
-    myservo.write(180)  //tells servo what angle to spin (in this case 180 degrees)
-  } else {
-    myservo.write(0);  //default position
+  if (digitalRead(buttonBPin) == HIGH) {
+    myservo2.write(180);
   }
-}
 
-//read button A
-if (buttonAState != lastButtonAState) {
-  if (buttonAState == HIGH) {
-    A = true;
+//BUTTON A READ
+  if (buttonAState != lastButtonAState) {
+    if (buttonAState == HIGH) {
+      A = true;  //tells for button A to be read
+      Serial.println("button A pressed");
+    }
   }
-}
 
-//read button B
-if (buttonBState != lastButtonBState) {
-  if (buttonBState == HIGH) {
-    B = true;
+ //BUTTON B READ
+  if (buttonBState != lastButtonBState) {
+    if (buttonBState == HIGH) {
+      B = true;  //tells for button B to be read
+      Serial.println("button B pressed");
+    }
   }
-}
 
-if (A && B) {
+//Once button A and B are both activated, "end story" is printed in the serial monitor
+  if (A && B) {
   Serial.println("end story");
 }
 
-lastButtonAState = buttonAState;
-lastButtonBState = buttonBState;
+  lastButtonAState = buttonAState;
+  lastButtonBState = buttonBState;
 }
